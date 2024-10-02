@@ -1,0 +1,215 @@
+{% extends 'api/base_generic.html' %}
+
+{% block content %}
+<div class="video-cover vid-container">
+    <video autoplay loop muted>
+        <source src="http://127.0.0.1:8000/static/media/academia_video3.mp4" type="video/mp4" />
+    </video>
+    <div class="video-overlay">
+        <h1 class="text-light fw-bold" style="font-family:Montserrat    ">Bienvenido a la Academia de Música Grupo 5</h1>
+    </div>
+</div>
+
+    <div class="container mt-1">
+        <div class="row">
+            <div class="col-md-6" id="profesores">
+                <div class="section-background">
+                    <h2 class="text-secondary">Profesores</h2>
+                    <ul class="list-group">
+                        {% for teacher in teachers %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ teacher.name }}
+                            {% if user.is_superuser %}
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'edit_teacher' teacher.id %}" class="btn btn-warning btn-sm me-2" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <form action="{% url 'confirm_delete_teacher' teacher.id %}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Profesor">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No hay profesores disponibles</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="mt-3">
+                        <a href="{% url 'create_teacher' %}" class="btn btn-success">Crear Nuevo Profesor</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" id="clases">
+                <div class="section-background">
+                    <h2 class="text-secondary">Clases</h2>
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        {% for class_obj in classes %}
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-body d-flex align-items-center">
+                                    <div>
+                                        <h5 class="card-title">{{ class_obj.name }}</h5>
+                                        <p class="card-text">Instrumento: {{ class_obj.instrument.name }}</p>
+                                        <p class="card-text">Precio: <span class="price-tag">{{ class_obj.price.amount }}€</span></p>
+                                    </div>
+                                    {% with instrument_name=class_obj.instrument.name %}
+                                    {% spaceless %}
+                                        {% with instrument_name_normalized=instrument_name|lower|slugify %}
+                                            {% if instrument_name_normalized == 'piano' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/piano.png" class="card-icon" alt="Icono de Piano">
+                                            {% elif instrument_name_normalized == 'guitarra' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/guitar.png" class="card-icon" alt="Icono de Guitarra">
+                                            {% elif instrument_name_normalized == 'bateria' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/drums.png" class="card-icon" alt="Icono de Batería">
+                                            {% elif instrument_name_normalized == 'flauta' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/flute.png" class="card-icon" alt="Icono de Flauta">
+                                            {% elif instrument_name_normalized == 'violin' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/violin.png" class="card-icon" alt="Icono de Violín">
+                                            {% elif instrument_name_normalized == 'canto' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/microphone.png" class="card-icon" alt="Icono de Canto">
+                                            {% elif instrument_name_normalized == 'saxofon' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/saxophone.png" class="card-icon" alt="Icono de Saxofon">
+                                            {% elif instrument_name_normalized == 'clarinete' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/clarinet.png" class="card-icon" alt="Icono de Clarinete">
+                                            {% elif instrument_name_normalized == 'percusion' %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/drum-set.png" class="card-icon" alt="Icono de Percusión">
+                                            {% elif instrument_name_normalized == 'bajo' %}
+                                                <img src="https://img.icons8.com/?size=100&id=101377&format=png&color=1A1A1A" class="card-icon" alt="Icono de Bajo">
+                                            {% else %}
+                                                <img src="https://img.icons8.com/ios-filled/50/000000/{{ instrument_name_normalized }}.png" class="card-icon" alt="Icono de {{ instrument_name }}">
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% endspaceless %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p>No hay clases disponibles</p>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-3" id="precios">
+                        <!-- Aquí iteramos sobre los precios -->
+                            <ul class="list-group">
+                                <h3 class="text-secondary">Precios de las Clases</h3>
+                                {% for price in prices %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span class="fs-small fw-lighter">{{ price.description }}</span> <span class="position-absolute top-0 start-100 translate-price badge rounded-pill bg-danger">{{ price.amount }}€</span>
+                                    {% if user.is_superuser %}
+                                    <a href="{% url 'edit_price' price.pk %}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    {% endif %}
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item">No hay precios disponibles</li>
+                                {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6" id="">
+                <div class="section-background">
+                    <h2 class="text-secondary">Paquetes de Clases</h2>
+                    <ul class="list-group">
+                        {% for class_pack in class_packs %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ class_pack.name }}
+                            {% if user.is_superuser %}
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'edit_class_pack' class_pack.id %}" class="btn btn-warning btn-sm me-2" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <form action="{% url 'confirm_delete_class_pack' class_pack.id %}" method="get" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Paquete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No hay paquetes de clases disponibles</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="mt-3">
+                        <a href="{% url 'create_class_pack' %}" class="btn btn-success">Crear Nuevo Paquete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="inscripciones">
+                <div class="section-background">
+                    <h2 class="text-secondary">Alumnos Inscritos</h2>
+                    <ul class="list-group">
+                        {% for student in students %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ student.first_name }} {{ student.last_name }}
+                            {% if user.is_superuser %}
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'edit_student' student.id %}" class="btn btn-warning btn-sm me-2" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <form action="{% url 'delete_student' student.id %}" method="get" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Alumno">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No hay alumnos inscritos disponibles</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'create_student' %}" class="btn btn-primary mt-3">Crear Nuevo Alumno</a>
+                    <a href="{% url 'create_enrollment' %}" class="btn btn-secondary mt-3">Crear Nueva Inscripción</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="section-background">
+                    <h2 class="text-secondary">Instrumentos</h2>
+                    <ul class="list-group">
+                        {% for instrument in instruments %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ instrument.name }}
+                            {% if user.is_superuser %}
+                            <div class="d-flex align-items-center">
+                                <a href="{% url 'edit_instrument' instrument.id %}" class="btn btn-warning btn-sm me-2" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <form action="{% url 'delete_instrument' instrument.id %}" method="get" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Instrumento">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No hay instrumentos disponibles</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'create_instrument' %}" class="btn btn-success mt-3">Crear Nuevo Instrumento</a>
+                </div>
+            </div>
+            {% if user.is_superuser %}
+            <div class="col-md-6"  id="datos">
+                <div class="section-background">
+                    <h2 class="text-secondary">Dashboard</h2>
+                    <a href="{% url 'execute_query_month' %}" class="btn btn-dark mt-3">Inscripciones mensuales</a>
+                    <a href="{% url 'execute_query_total_due' %}" class="btn btn-dark mt-3">Total Deuda</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'api/base_generic.html' %}
+
+{% block content %}
+<div class="container d-flex">
+    <div class="container mt-5">
+        <h1 class="text-center text-secondary">Resultados de la Nueva Consulta</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                    <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Volver a Inicio</a>
+    </div>
+</div>
+{% endblock content %}
