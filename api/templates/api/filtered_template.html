@@ -1,0 +1,17 @@
+{% extends 'api/base_generic.html' %}
+
+{% block content %}
+    <h2>Filtrar Documentos</h2>
+    <form method="get">
+        <!-- Mismo formulario de selección que el anterior -->
+    </form>
+
+    <h3>Resultados Filtrados</h3>
+    <ul>
+        {% for documento in filtered_data %}
+        <li>{{ documento.name }}</li>
+        {% empty %}
+        <li>No se encontraron documentos</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

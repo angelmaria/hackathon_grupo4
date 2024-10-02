@@ -70,4 +70,36 @@
         </div>
     </div>
 </div>
+<div class="container mt-1">
+    <form method="get" action="{% url 'filtered_view' %}">
+        <div class="form-group">
+            <label for="ciudad">Selecciona Ciudad:</label>
+            <select name="ciudad" id="ciudad" class="form-control">
+                <option value="">Todas</option>
+                {% for ciudad in ciudades %}
+                <option value="{{ ciudad.id }}">{{ ciudad.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="categoria">Selecciona Categoría:</label>
+            <select name="categoria" id="categoria" class="form-control">
+                <option value="">Todas</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subcategoria">Selecciona Subcategoría:</label>
+            <select name="subcategoria" id="subcategoria" class="form-control">
+                <option value="">Todas</option>
+                {% for subcategoria in subcategorias %}
+                <option value="{{ subcategoria.id }}">{{ subcategoria.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Filtrar</button>
+    </form>    
+</div>
 {% endblock %}
