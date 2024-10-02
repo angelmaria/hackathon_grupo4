@@ -1,36 +1,28 @@
-# api/forms.py
-
 from django import forms
-from .models import Enrollment, Student, Teacher, Instrument, ClassPack, Price
+from .models import Ciudad, Documento, Subcategoria, Categoria
 
+class CiudadForm(forms.ModelForm):
+    class Meta:
+        model = Ciudad
+        fields = ['nombre']  # Cambia 'nombre' por el campo que tienes en tu modelo
 
-# Formulario para el modelo Enrollment
-class EnrollmentForm(forms.ModelForm):
+class DocumentoForm(forms.ModelForm):
     class Meta:
-        model = Enrollment
-        fields = '__all__'  # Todos los campos del modelo Enrollment
+        model = Documento
+        fields = ['titulo', 'contenido']  # Cambia por los campos que tengas en tu modelo Documento
 
-class StudentForm(forms.ModelForm):
+class SubcategoriaForm(forms.ModelForm):
     class Meta:
-        model = Student
-        fields = '__all__'   
+        model = Subcategoria
+        fields = ['nombre']  # Cambia 'nombre' por el campo que tienes en tu modelo
 
-class TeacherForm(forms.ModelForm):
+class CategoriaForm(forms.ModelForm):
     class Meta:
-        model = Teacher
-        fields = '__all__'  
-        
-class InstrumentForm(forms.ModelForm):
-    class Meta:
-        model = Instrument
-        fields = '__all__'
+        model = Categoria
+        fields = ['nombre']  # Cambia 'nombre' por el campo que tienes en tu modelo
 
-class ClassPackForm(forms.ModelForm):
-    class Meta:
-        model = ClassPack
-        fields = ['name']
-
-class PriceForm(forms.ModelForm):
-    class Meta:
-        model = Price
-        fields = '__all__'
+class CiudadDocumentoForm(forms.Form):
+    ciudad = forms.ModelChoiceField(queryset=Ciudad.objects.all(), label='Ciudad')
+    documento = forms.ModelChoiceField(queryset=Documento.objects.all(), label='Tipo de Documento')
+    subcategoria = forms.ModelChoiceField(queryset=Subcategoria.objects.all(), label='Subcategoría')
+    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), label='Categoría')  # Nuevo campo añadido

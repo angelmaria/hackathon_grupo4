@@ -1,16 +1,26 @@
-
 # Registrar modelos en el sitio de administración de Django
 from django.contrib import admin
-from .models import Teacher, ClassPack, Instrument, Price, Class, Level, TeacherClass, Student, Enrollment, ClassPackDiscountRule, ClassPackClass
+from .models import Ciudad, Documento, Categoria, Subcategoria
 
-admin.site.register(Teacher)
-admin.site.register(ClassPack)
-admin.site.register(Instrument)
-admin.site.register(Price)
-admin.site.register(Class)
-admin.site.register(Level)
-admin.site.register(TeacherClass)
-admin.site.register(Student)
-admin.site.register(Enrollment)
-admin.site.register(ClassPackDiscountRule)
-admin.site.register(ClassPackClass)
+# Registro de modelos en el panel de administración
+@admin.register(Ciudad)
+class CiudadAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'pais', 'poblacion', 'created_at', 'updated_at')
+    search_fields = ('nombre', 'pais')
+
+@admin.register(Documento)
+class DocumentoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'ciudad', 'categoria', 'created_at', 'updated_at')
+    search_fields = ('titulo',)
+    list_filter = ('ciudad', 'categoria')
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'created_at', 'updated_at')
+    search_fields = ('nombre',)
+
+@admin.register(Subcategoria)
+class SubcategoriaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'categoria', 'created_at', 'updated_at')
+    search_fields = ('nombre',)
+    list_filter = ('categoria',)
