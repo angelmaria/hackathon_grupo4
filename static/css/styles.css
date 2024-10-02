@@ -1,0 +1,97 @@
+/* Estilos existentes */
+.section-background {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    color: #000;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #6c757d;
+}
+
+.card-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
+}
+
+.price-tag {
+    font-weight: bold;
+    color: #05737d;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+ul.navbar-nav li {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.translate-price {
+    transform: translate(-190%, -30%) !important;
+}
+
+.login a {
+    border-radius: 5px;
+    background-color: darkcyan;
+    color: white !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: 1px solid lightgrey;
+}
+
+.login a:hover {
+    background-color: white;
+    color: darkcyan !important;
+    border: 1px solid lightgrey;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* Estilos para el video */
+video {
+    width: 100%;
+    height: 100%;
+}
+
+.vid-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ajusta la altura según tu preferencia */
+    overflow: hidden;
+}
+
+.video-cover video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Nuevos estilos para el texto sobre el video */
+.video-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff; /* Blanco para el texto */
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5); /* Fondo negro semi-transparente */
+    border-radius: 5px; /* Bordes redondeados opcional */
+    width: 70%;
+    box-sizing: border-box; /* Para incluir el padding en el ancho total */
+}
+
+.text-muted {
+    color: #ffffff; /* Blanco para el texto */
+    font-size: 2rem; /* Tamaño del texto, ajusta según tu preferencia */
+    margin: 0; /* Elimina el margen si es necesario */
+}
