@@ -1,17 +1,25 @@
 {% extends 'api/base_generic.html' %}
 
 {% block content %}
-    <h2>Filtrar Documentos</h2>
-    <form method="get">
-        <!-- Mismo formulario de selección que el anterior -->
-    </form>
-
-    <h3>Resultados Filtrados</h3>
-    <ul>
-        {% for documento in filtered_data %}
-        <li>{{ documento.name }}</li>
-        {% empty %}
-        <li>No se encontraron documentos</li>
+    <select name="ciudad" id="ciudad" class="form-control">
+        <option value="">Todas</option>
+        {% for ciudad in ciudades %}
+        <option value="{{ ciudad.id }}">{{ ciudad.name }}</option>
         {% endfor %}
-    </ul>
+    </select>
+    
+    <select name="categoria" id="categoria" class="form-control">
+        <option value="">Todas</option>
+        {% for categoria in categorias %}
+        <option value="{{ categoria.id }}">{{ categoria.name }}</option>
+        {% endfor %}
+    </select>
+    
+    <select name="subcategoria" id="subcategoria" class="form-control">
+        <option value="">Todas</option>
+        {% for subcategoria in subcategorias %}
+        <option value="{{ subcategoria.id }}">{{ subcategoria.name }}</option>
+        {% endfor %}
+    </select>
+    
 {% endblock %}

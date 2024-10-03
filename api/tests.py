@@ -1,81 +1,33 @@
 import pytest
-from .models import Teacher, ClassPack, Instrument, Price, Class, Level, TeacherClass, Student, Enrollment, ClassPackDiscountRule, ClassPackClass
+from .models import Ciudad, Categoria, Subcategoria, Documento
 
-# Test para crear un Teacher
+# Test para crear una Ciudad
 @pytest.mark.django_db
-def test_create_teacher():
-    teacher = Teacher.objects.create(name='John Doe')
-    assert Teacher.objects.count() == 1# Verifica que se ha creado un Teacher
-    assert teacher.name == 'John Doe'  # Verifica que el nombre del Teacher es correcto
-
-@pytest.mark.django_db
-def test_create_class_pack():
-    class_pack = ClassPack.objects.create(name='Pack 1')
-    assert ClassPack.objects.count() == 1
-    assert class_pack.name == 'Pack 1'
+def test_create_ciudad():
+    ciudad = Ciudad.objects.create(nombre='Madrid')  # Cambiar 'name' a 'nombre'
+    assert Ciudad.objects.count() == 1  # Verifica que se ha creado una Ciudad
+    assert ciudad.nombre == 'Madrid'  # Verifica que el nombre de la Ciudad es correcto
 
 @pytest.mark.django_db
-def test_create_instrument():
-    instrument = Instrument.objects.create(name='Piano')
-    assert Instrument.objects.count() == 1
-    assert instrument.name == 'Piano'
+def test_create_categoria():
+    categoria = Categoria.objects.create(nombre='Música')  # Cambiar 'name' a 'nombre'
+    assert Categoria.objects.count() == 1
+    assert categoria.nombre == 'Música'  # Cambiar 'name' a 'nombre'
 
 @pytest.mark.django_db
-def test_create_class():
-    instrument = Instrument.objects.create(name='Guitar')
-    price = Price.objects.create(amount=35.00, description='Beginner Class Price')
-    _class = Class.objects.create(name='Guitar Beginner', instrument=instrument, price=price)
-    assert Class.objects.count() == 1
-    assert _class.name == 'Guitar Beginner'
+def test_create_subcategoria():
+    categoria = Categoria.objects.create(nombre='Arte')  # Cambiar 'name' a 'nombre'
+    subcategoria = Subcategoria.objects.create(nombre='Pintura', categoria=categoria)  # Cambiar 'name' a 'nombre'
+    assert Subcategoria.objects.count() == 1
+    assert str(subcategoria) == 'Pintura'  # Cambiar 'Pintura - Arte' a 'Pintura'
 
 @pytest.mark.django_db
-def test_create_level():
-    instrument = Instrument.objects.create(name='Violin')
-    price = Price.objects.create(amount=40.00, description='Intermediate Class Price')
-    _class = Class.objects.create(name='Violin Intermediate', instrument=instrument, price=price)
-    level = Level.objects.create(name='Intermediate Level', class_id=_class)
-    assert Level.objects.count() == 1
-    assert str(level) == 'Intermediate Level - Violin Intermediate'
+def test_create_documento():
+    ciudad = Ciudad.objects.create(nombre='Barcelona')  # Crear la Ciudad
+    categoria = Categoria.objects.create(nombre='Documentación')  # Crear la Categoria
+    documento = Documento.objects.create(titulo='Documentación de Proyecto', ciudad=ciudad, categoria=categoria)  # Pasar categoria
+    assert Documento.objects.count() == 1
+    assert documento.titulo == 'Documentación de Proyecto'  # Verifica el título
+    assert documento.ciudad == ciudad  # Verifica la ciudad
+    assert documento.categoria == categoria  # Verifica la categoría
 
-@pytest.mark.django_db
-def test_create_teacher_class():
-    teacher = Teacher.objects.create(name='Jane Smith')
-    instrument = Instrument.objects.create(name='Flute')
-    price = Price.objects.create(amount=35.00, description='Advanced Class Price')
-    _class = Class.objects.create(name='Flute Advanced', instrument=instrument, price=price)
-    teacher_class = TeacherClass.objects.create(teacher=teacher, class_id=_class)
-    assert TeacherClass.objects.count() == 1
-    assert str(teacher_class) == 'Jane Smith - Flute Advanced'
-
-@pytest.mark.django_db
-def test_create_student():
-    student = Student.objects.create(first_name='Alice', last_name='Johnson', age=25)
-    assert Student.objects.count() == 1
-    assert str(student) == 'Alice Johnson'
-
-@pytest.mark.django_db
-def test_create_enrollment():
-    student = Student.objects.create(first_name='Bob', last_name='Brown', age=30)
-    instrument = Instrument.objects.create(name='Drums')
-    price = Price.objects.create(amount=35.00, description='Advanced Class Price')
-    _class = Class.objects.create(name='Drums Advanced', instrument=instrument, price=price)
-    enrollment = Enrollment.objects.create(student=student, class_id=_class, enrollment_date='2024-07-10')
-    assert Enrollment.objects.count() == 1
-    assert str(enrollment) == 'Bob Brown - Drums Advanced'
-
-@pytest.mark.django_db
-def test_create_class_pack_discount_rule():
-    class_pack = ClassPack.objects.create(name='Class Pack B')
-    discount_rule = ClassPackDiscountRule.objects.create(class_pack=class_pack, class_number=3, discount_percentage=10.00)
-    assert ClassPackDiscountRule.objects.count() == 1
-    assert str(discount_rule) == 'Class Pack B - 3'
-
-@pytest.mark.django_db
-def test_create_class_pack_class():
-    class_pack = ClassPack.objects.create(name='Class Pack C')
-    instrument = Instrument.objects.create(name='Bass Guitar')
-    price = Price.objects.create(amount=40.00, description='Intermediate Class Price')
-    _class = Class.objects.create(name='Bass Guitar Intermediate', instrument=instrument, price=price)
-    class_pack_class = ClassPackClass.objects.create(class_pack=class_pack, class_id=_class)
-    assert ClassPackClass.objects.count() == 1
-    assert str(class_pack_class) == 'Class Pack C - Bass Guitar Intermediate'

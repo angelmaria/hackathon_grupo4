@@ -11,8 +11,9 @@ router.register(r'categoria', CategoriaViewSet)  # Ruta para Categoria
 router.register(r'subcategoria', SubcategoriaViewSet)  # Ruta para Subcategoria
 
 urlpatterns = [
-    path('', include(router.urls)),  # Rutas registradas por los ViewSet
+    path('api/', include(router.urls)),  # Rutas registradas por los ViewSet
     path('', home, name='home'),  # Ruta para la vista home
+    path('filtered/', views.filtered_view, name='filtered_view'),
     path('create-ciudad/', views.create_ciudad, name='create_ciudad'),  # Crear una ciudad
     path('create-documento/', views.create_documento, name='create_documento'),  # Crear un documento
     path('delete-ciudad/<int:ciudad_id>/', views.delete_ciudad, name='delete_ciudad'),  # Eliminar ciudad

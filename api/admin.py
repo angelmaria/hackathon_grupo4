@@ -5,7 +5,7 @@ from .models import Ciudad, Documento, Categoria, Subcategoria
 # Registro de modelos en el panel de administración
 @admin.register(Ciudad)
 class CiudadAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'pais', 'poblacion', 'created_at', 'updated_at')
+    list_display = ('nombre', 'created_at', 'updated_at')
     search_fields = ('nombre', 'pais')
 
 @admin.register(Documento)

@@ -37,6 +37,34 @@ def home(request):
     }
     return render(request, 'api/home.html', context)
 
+def filtered_view(request):
+    ciudad_id = request.GET.get('ciudad')
+    categoria_id = request.GET.get('categoria')
+    subcategoria_id = request.GET.get('subcategoria')
+
+    filtered_data = Documento.objects.all()
+
+    # Filtrando los datos basado en los parámetros proporcionados
+    filters = Q()
+    if ciudad_id:
+        filters &= Q(ciudad_id=ciudad_id)
+    if categoria_id:
+        filters &= Q(categoria_id=categoria_id)
+    if subcategoria_id:
+        filters &= Q(subcategoria_id=subcategoria_id)
+
+    filtered_data = filtered_data.filter(filters)
+
+    context = {
+        'filtered_data': filtered_data,
+        'ciudades': Ciudad.objects.all(),
+        'categorias': Categoria.objects.all(),
+        'subcategorias': Subcategoria.objects.all(),
+    }
+    
+    return render(request, 'filtered_template.html', context)
+
+
 # Vista para crear una ciudad
 def create_ciudad(request):
     if request.method == 'POST':

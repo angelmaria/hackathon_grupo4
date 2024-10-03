@@ -10,16 +10,17 @@
     </div>
 </div>
 
-<div class="container mt-1">
+{% comment %} <div class="container mt-1">
     <div class="row">
         <div class="col-md-6" id="ciudades">
             <div class="section-background">
                 <h2 class="text-secondary">Selecciona tu Ciudad</h2>
                 <ul class="list-group">
-                    {% for city in cities %}
+                    {% for ciudad in ciudades %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ city.name }}
-                        <a href="{% url 'city_detail' city.id %}" class="btn btn-primary btn-sm">Ver</a>
+                        {{ ciudad.name }}
+                        <!-- Se eliminó el enlace a 'city_detail' -->
+                        <span class="btn btn-secondary btn-sm disabled">No disponible</span>
                     </li>
                     {% empty %}
                     <li class="list-group-item">No hay ciudades disponibles</li>
@@ -32,15 +33,15 @@
             <div class="section-background">
                 <h2 class="text-secondary">Categorías Disponibles</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-4">
-                    {% for category in categories %}
+                    {% for categoria in categorias %}
                     <div class="col">
                         <div class="card">
                             <div class="card-body d-flex align-items-center">
                                 <div>
-                                    <h5 class="card-title">{{ category.name }}</h5>
-                                    <p class="card-text">Descripción: {{ category.description }}</p>
+                                    <h5 class="card-title">{{ categoria.name }}</h5>
+                                    <p class="card-text">Descripción: {{ categoria.description }}</p>
                                 </div>
-                                <a href="{% url 'category_detail' category.id %}" class="btn btn-info btn-sm ms-auto">Ver Más</a>
+                                <a href="{% url 'category_detail' categoria.id %}" class="btn btn-info btn-sm ms-auto">Ver Más</a>
                             </div>
                         </div>
                     </div>
@@ -57,10 +58,10 @@
             <div class="section-background">
                 <h2 class="text-secondary">Subcategorías</h2>
                 <ul class="list-group">
-                    {% for subcategory in subcategories %}
+                    {% for subcategoria in subcategorias %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ subcategory.name }}
-                        <a href="{% url 'subcategory_detail' subcategory.id %}" class="btn btn-primary btn-sm">Ver</a>
+                        {{ subcategoria.name }}
+                        <a href="{% url 'subcategoria_detail' subcategoria.id %}" class="btn btn-primary btn-sm">Ver</a>
                     </li>
                     {% empty %}
                     <li class="list-group-item">No hay subcategorías disponibles</li>
@@ -69,7 +70,8 @@
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
+
 <div class="container mt-1">
     <form method="get" action="{% url 'filtered_view' %}">
         <div class="form-group">

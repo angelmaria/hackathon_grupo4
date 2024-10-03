@@ -24,9 +24,9 @@ class SubcategoriaSerializer(serializers.ModelSerializer):
 
 # Serializador para el modelo Documento
 class DocumentoSerializer(serializers.ModelSerializer):
-    ciudad = CiudadSerializer(read_only=True)  # Incluye los detalles de la ciudad
-    categoria = CategoriaSerializer(read_only=True)  # Incluye los detalles de la categoría
-    # subcategoria = SubcategoriaSerializer(read_only=True)  # Si deseas incluir los detalles de la subcategoría
+    ciudad = serializers.PrimaryKeyRelatedField(queryset=Ciudad.objects.all())  # Permite asignar una ciudad
+    categoria = serializers.PrimaryKeyRelatedField(queryset=Categoria.objects.all())  # Permite asignar una categoría
+    subcategoria = serializers.PrimaryKeyRelatedField(queryset=Subcategoria.objects.all())  # Permite asignar una subcategoría
 
     class Meta:
         model = Documento
