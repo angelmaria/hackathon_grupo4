@@ -1,15 +1,6 @@
 {% extends 'api/base_generic.html' %}
 
 {% block content %}
-<div class="video-cover vid-container">
-    <video autoplay loop muted>
-        <source src="http://127.0.0.1:8000/static/media/ciudad_video.mp4" type="video/mp4" />
-    </video>
-    <div class="video-overlay">
-        <h1 class="text-light fw-bold" style="font-family:Montserrat">Bienvenido a la Plataforma Ciudadana</h1>
-    </div>
-</div>
-
 {% comment %} <div class="container mt-1">
     <div class="row">
         <div class="col-md-6" id="ciudades">
@@ -71,6 +62,68 @@
         </div>
     </div>
 </div> {% endcomment %}
+
+<div class="alert">
+    Nuevas actualizaciones del estatus de protección temporal (TPS) para Palestina y Líbano.
+</div>
+
+<main>
+    <section class="hero" style="background-image: url('../../../static/media/hero.jpg'); height:100vh;">
+        <div class="hero-content">
+            <h1>EASY SPAIN</h1>
+            <p>Facilitando la integración de personas que acaban de llegar a un nuevo país.</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <img src="community-icon.png" alt="Comunidad">
+            <p>Acceso a servicios comunitarios, legales y médicos.</p>
+        </div>
+        <div class="feature">
+            <img src="info-icon.png" alt="Información">
+            <p>Información actualizada sobre trámites y documentos que necesitas.</p>
+        </div>
+        <div class="feature">
+            <img src="support-icon.png" alt="Soporte">
+            <p>Soporte multilingüe para asegurarnos de que siempre puedes entender la información que necesitas.</p>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="category">
+            <img src="education.jpg" alt="Educación">
+            <h3>Educación</h3>
+        </div>
+        <div class="category">
+            <img src="immigration.jpg" alt="Inmigración">
+            <h3>Inmigración</h3>
+        </div>
+        <div class="category">
+            <img src="health.jpg" alt="Salud">
+            <h3>Salud</h3>
+        </div>
+        <div class="category">
+            <img src="work.jpg" alt="Trabajo">
+            <h3>Trabajo</h3>
+        </div>
+    </section>
+
+    <section class="contact-form">
+        <h2>Contacto</h2>
+        <form>
+            <input type="text" placeholder="Nombre">
+            <input type="email" placeholder="e-mail">
+            <input type="tel" placeholder="Teléfono">
+            <textarea placeholder="Deja tu mensaje aquí..."></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; Copyright 2024 | All Rights Reserved | Easy Spain</p>
+</footer>
 
 <div class="container mt-1">
     <form method="get" action="{% url 'filtered_view' %}">
